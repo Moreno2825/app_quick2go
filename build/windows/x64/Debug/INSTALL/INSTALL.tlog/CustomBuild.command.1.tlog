@@ -1,0 +1,10 @@
+^C:\USERS\RODRI\DOCUMENTS\APPQUICK2GO\HOMESCREEN\BUILD\WINDOWS\CMAKEFILES\43A04A9AA078F72CE938109DD548A8B3\INSTALL_FORCE.RULE
+setlocal
+cd .
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

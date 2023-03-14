@@ -1,0 +1,10 @@
+^C:\USERS\RODRI\DOCUMENTS\APPQUICK2GO\HOMESCREEN\BUILD\WINDOWS\CMAKEFILES\43A04A9AA078F72CE938109DD548A8B3\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/rodri/Documents/AppQuick2Go/HomeScreen/windows -BC:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/test1.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
