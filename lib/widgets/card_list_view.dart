@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/Pages/category_page.dart';
 import 'package:test1/providers/categories_provider.dart';
 
@@ -14,7 +13,7 @@ class CardListView extends StatelessWidget {
               .isLoading
           ? const Center(child: CircularProgressIndicator())
           : Container(
-              constraints: const BoxConstraints(maxHeight: 280),
+              constraints: const BoxConstraints(maxHeight: 460),
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

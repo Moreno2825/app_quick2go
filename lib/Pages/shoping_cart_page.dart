@@ -59,8 +59,32 @@ class _ShopinCartPageState extends State<ShopinCartPage> {
             ),
           ),
           ElevatedButton(
-            child: const Text('Pagar'),
-            onPressed: () {},
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.green)),
+            child: Text('Pagar'),
+            onPressed: cartProvider.totalPrice > 0
+                ? () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Compra realizada'),
+                          content: const Text(
+                              'Su compra se ha realizado correctamente.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => const HomeScreen()));
+                              },
+                              child: const Text('Aceptar'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                : null,
           ),
           const SizedBox(height: 20),
         ],

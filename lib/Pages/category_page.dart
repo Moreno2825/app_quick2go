@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/homepage.dart';
+import 'package:test1/Pages/search_screen.dart';
+import 'package:test1/Pages/shoping_cart_page.dart';
 import 'package:test1/components/constants.dart';
 import 'package:test1/providers/products_provider.dart';
 import 'package:test1/providers/shopping_cart_provider.dart';
@@ -27,6 +29,17 @@ class _CategoryPageState extends State<CategoryPage> {
           : Scaffold(
               appBar: AppBar(
                 backgroundColor: kPrimaryColor,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ProductSearchScreen()));
+                    },
+                  )
+                ],
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back),
                   onPressed: () {},
@@ -34,7 +47,7 @@ class _CategoryPageState extends State<CategoryPage> {
                 ),
               ),
               body: SizedBox(
-                height: 380,
+                height: 720,
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 20,
@@ -101,17 +114,31 @@ class _CategoryPageState extends State<CategoryPage> {
                                           final cartProvider =
                                               Provider.of<CartProvider>(context,
                                                   listen: false);
-                                          cartProvider.addToCart(product);
-                                          Fluttertoast.showToast(
-                                            msg:
-                                                '¡${product.nombreProducto} se agregó al carrito!',
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.BOTTOM,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.grey[300],
-                                            textColor: Colors.black,
-                                            fontSize: 16.0,
-                                          );
+                                          if (cartProvider.cartItems.length <
+                                              10) {
+                                            cartProvider.addToCart(product);
+                                            Fluttertoast.showToast(
+                                              msg:
+                                                  '¡${product.nombreProducto} se agregó al carrito!',
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.grey[300],
+                                              textColor: Colors.black,
+                                              fontSize: 16.0,
+                                            );
+                                          } else {
+                                            Fluttertoast.showToast(
+                                              msg:
+                                                  'No se pueden agregar más de 10 productos',
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.BOTTOM,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.grey[300],
+                                              textColor: Colors.black,
+                                              fontSize: 16.0,
+                                            );
+                                          }
                                         },
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor: kValueColor),
@@ -155,11 +182,13 @@ class _CategoryPageState extends State<CategoryPage> {
                             setState(
                               () {
                                 //_selectedIndex = 0;
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const HomeScreen()));
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const HomeScreen(),
+                                  ),
+                                );
                               },
                             );
-                            //Ver como hacer el ruteo
                           },
                         ),
                         IconBottomBar(
@@ -170,9 +199,11 @@ class _CategoryPageState extends State<CategoryPage> {
                             setState(
                               () {
                                 //_selectedIndex = 1;
-                                Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => const CategoriesPage(),
-                                ));
+                                // Navigator.of(context).push(
+                                //   MaterialPageRoute(
+                                //     builder: (context) => const CategoriesPage(),
+                                //   ),
+                                // );
                               },
                             );
                           },
@@ -185,6 +216,12 @@ class _CategoryPageState extends State<CategoryPage> {
                             setState(
                               () {
                                 _selectedIndex = 2;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ShopinCartPage(),
+                                  ),
+                                );
                               },
                             );
                           },

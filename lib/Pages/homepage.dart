@@ -56,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: const SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            children: [TopBar(), SearchInput(), PromoCard(), CardListView()],
+            children: [TopBar(), PromoCard(), CardListView()],
           ),
         ),
       ),
