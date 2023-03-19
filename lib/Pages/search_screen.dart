@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/Pages/shoping_cart_page.dart';
@@ -39,9 +38,15 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                 labelText: 'Ingresa el nombre del producto',
                 border: OutlineInputBorder(),
               ),
-              onSubmitted: (value) {
-                Provider.of<ProductService>(context, listen: false)
-                    .getProductByName(value);
+              onSubmitted: (value) async {
+                try {
+                  await Provider.of<ProductService>(context, listen: false)
+                      .getProductByName(value);
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(e.toString())),
+                  );
+                }
               },
             ),
           ),

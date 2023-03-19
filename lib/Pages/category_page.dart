@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/Pages/search_screen.dart';
@@ -36,7 +35,8 @@ class _CategoryPageState extends State<CategoryPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProductSearchScreen()));
+                              builder: (context) =>
+                                  const ProductSearchScreen()));
                     },
                   )
                 ],

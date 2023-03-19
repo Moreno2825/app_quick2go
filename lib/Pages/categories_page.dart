@@ -20,6 +20,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kPrimaryColor,
+      ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -28,65 +31,82 @@ class _CategoriesPageState extends State<CategoriesPage> {
               builder: (context, categoriesProvider, child) =>
                   categoriesProvider.isLoading
                       ? const Center(child: CircularProgressIndicator())
-                      : Expanded(
-                          child: ListView.builder(
-                            itemCount: categoriesProvider.categories?.length,
-                            itemBuilder: (context, index) {
-                              final category =
-                                  categoriesProvider.categories![index];
-                              return Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Card(
-                                    elevation: 5,
-                                    color: kWhiteColor,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(28)),
-                                    child: SizedBox(
-                                      width: 400,
-                                      height: 150,
-                                      child: Row(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(28),
-                                            child: Image.network(
-                                              category.foto,
-                                              fit: BoxFit.cover,
-                                              width: 250,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10),
-                                          Expanded(
-                                            child: TextButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const CategoryPage(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Text(
-                                                category.nombre,
-                                                style: const TextStyle(
-                                                    color: kValueColor,
-                                                    fontFamily: 'Roboto',
-                                                    fontSize: 14,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                      : SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (final category
+                                  in categoriesProvider.categories!)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 20),
+                                      child: Text(
+                                        category.nombre,
+                                        style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 8, left: 8, right: 8),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const CategoryPage()));
+                                        },
+                                        child: Card(
+                                          semanticContainer: true,
+                                          margin: const EdgeInsets.all(10),
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4),
+                                          ),
+                                          elevation: 4,
+                                          clipBehavior: Clip.antiAlias,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                                child: Image.network(
+                                                  category.foto,
+                                                  fit: BoxFit.fitWidth,
+                                                  height: 200,
+                                                ),
+                                              ),
+                                              Container(
+                                                color: Colors.black
+                                                    .withOpacity(0.8),
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                  vertical: 8,
+                                                  horizontal: 16,
+                                                ),
+                                                child: Text(
+                                                  category.descripcion,
+                                                  style: const TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              );
-                            },
+                            ],
                           ),
                         ),
             ),

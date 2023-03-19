@@ -14,13 +14,18 @@ class ProductService with ChangeNotifier {
   List<ProductResponseDto> get products => _products;
 
   Future<void> getProductByName(String name) async {
+    if (name.isEmpty) {
+      _products = [];
+      notifyListeners();
+      return;
+    }
     final response = await http.get(
         Uri.parse(
             'http://www.quick2goapiprod.somee.com/api/productos/nombreProducto?nombre=$name'),
         headers: <String, String>{'content-type': 'application/json'});
 
     if (response.statusCode == 200) {
-      if (response.body != null && response.body.isNotEmpty) {
+      if (response.body.isNotEmpty) {
         final json = jsonDecode(response.body);
         final List<dynamic> data = json;
         logger.d(json);

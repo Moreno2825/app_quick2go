@@ -12,6 +12,7 @@ C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/fonts/PaytoneOne-Regular.ttf
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/fonts/Roboto-Bold.ttf
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/kernel_blob.bin
+C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/NOTICES
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/NOTICES.Z
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/packages/fluttertoast/assets/toastify.css

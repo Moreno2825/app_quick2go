@@ -5,6 +5,7 @@ import 'package:test1/Pages/shoping_cart_page.dart';
 import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/components/constants.dart';
 import 'package:test1/widgets/card_list_view.dart';
+import 'package:test1/widgets/headline.dart';
 import 'package:test1/widgets/icons.dart';
 import 'package:test1/widgets/promo_card.dart';
 import 'package:test1/widgets/search_input.dart';
