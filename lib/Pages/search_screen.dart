@@ -224,7 +224,7 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                         _selectedIndex = 2;
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) => const ShopinCartPage(),
+                            builder: (context) => const CartScreen(),
                           ),
                         );
                       },

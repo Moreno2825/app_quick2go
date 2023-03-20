@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test1/providers/categories_provider.dart';
+import 'package:test1/providers/pedidos_provide.dart';
 import 'package:test1/providers/products_provider.dart';
 import 'package:test1/providers/products_service.dart';
 import 'package:test1/providers/shopping_cart_provider.dart';
@@ -24,7 +25,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (context) => UsersProvider()),
         ChangeNotifierProvider(create: (context) => CartProvider()),
-        ChangeNotifierProvider(create: (context) => ProductService())
+        ChangeNotifierProvider(create: (context) => ProductService()),
+        ChangeNotifierProvider(
+            create: (context) => PedidoProvider()..fetchPedidos())
       ],
       child: const MaterialApp(
         title: 'Material App',

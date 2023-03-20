@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       () {
                         _selectedIndex = 2;
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ShopinCartPage()));
+                            builder: (context) => const CartScreen()));
                       },
                     );
                   },

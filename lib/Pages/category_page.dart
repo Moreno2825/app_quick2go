@@ -219,7 +219,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
                                     builder: (context) =>
-                                        const ShopinCartPage(),
+                                        const CartScreen(),
                                   ),
                                 );
                               },

@@ -1,93 +1,98 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/components/constants.dart';
-import 'package:test1/providers/shopping_cart_provider.dart';
+import 'package:test1/providers/pedidos_provide.dart';
 import 'package:test1/widgets/icons.dart';
 
-class ShopinCartPage extends StatefulWidget {
-  const ShopinCartPage({super.key});
+class CartScreen extends StatefulWidget {
+  const CartScreen({Key? key}) : super(key: key);
 
   @override
-  State<ShopinCartPage> createState() => _ShopinCartPageState();
+  _CartScreenState createState() => _CartScreenState();
 }
 
-class _ShopinCartPageState extends State<ShopinCartPage> {
+class _CartScreenState extends State<CartScreen> {
   int _selectedIndex = 0;
   @override
+  void initState() {
+    // Llama a fetchPedidos cuando la pantalla es cargada
+    Provider.of<PedidoProvider>(context, listen: false).fetchPedidos();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final cartProvider = Provider.of<CartProvider>(context);
-    final cartItems = cartProvider.cartItems;
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Shopping Cart'),
         backgroundColor: kPrimaryColor,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-          color: const Color.fromARGB(255, 255, 255, 255),
-        ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: cartItems.length,
-              itemBuilder: (context, index) {
-                final product = cartItems[index];
-                return ListTile(
-                  title: Text(product.nombreProducto),
-                  subtitle: Text(product.descripcion),
-                  leading: Image.network(product.foto),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete),
-                    onPressed: () {
-                      cartProvider.removeFromCart(product);
-                    },
-                  ),
-                );
-              },
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            'Total: \$${cartProvider.totalPrice}',
-            style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.green)),
-            child: Text('Pagar'),
-            onPressed: cartProvider.totalPrice > 0
-                ? () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Text('Compra realizada'),
-                          content: const Text(
-                              'Su compra se ha realizado correctamente.'),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const HomeScreen()));
-                              },
-                              child: const Text('Aceptar'),
+      body: Consumer<PedidoProvider>(
+        builder: (context, provider, child) {
+          if (provider.isLoading) {
+            return const CircularProgressIndicator();
+          }
+          return Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: provider.pedidos.length,
+                  itemBuilder: (context, index) {
+                    final pedido = provider.pedidos[index];
+                    return ListTile(
+                      leading: Image.network(pedido.producto.foto),
+                      title: Text(pedido.producto.nombreProducto),
+                      subtitle: Text(
+                          '${pedido.cantidadProducto} x \$${pedido.subTotal}'),
+                      trailing: IconButton(
+                        icon: const Icon(Icons.delete),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('¿Eliminar pedido?'),
+                              content: const Text(
+                                  '¿Está seguro de que desea eliminar este pedido?'),
+                              actions: [
+                                TextButton(
+                                  child: const Text('Cancelar'),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                                TextButton(
+                                  child: const Text('Eliminar'),
+                                  onPressed: () async {
+                                    await provider.eliminarPedido(pedido.id);
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Pedido eliminado'),
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        );
-                      },
+                          );
+                        },
+                      ),
                     );
-                  }
-                : null,
-          ),
-          const SizedBox(height: 20),
-        ],
+                  },
+                ),
+              ),
+              const Divider(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Total:'),
+                  Text('\$${provider.getTotal().toStringAsFixed(2)}'),
+                ],
+              ),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
         color: kPrimaryColor,
@@ -107,11 +112,13 @@ class _ShopinCartPageState extends State<ShopinCartPage> {
                     setState(
                       () {
                         //_selectedIndex = 0;
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HomeScreen()));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const HomeScreen(),
+                          ),
+                        );
                       },
                     );
-                    //Ver como hacer el ruteo
                   },
                 ),
                 IconBottomBar(
@@ -122,9 +129,11 @@ class _ShopinCartPageState extends State<ShopinCartPage> {
                     setState(
                       () {
                         //_selectedIndex = 1;
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const CategoriesPage(),
-                        ));
+                        // Navigator.of(context).push(
+                        //   MaterialPageRoute(
+                        //     builder: (context) => const CategoriesPage(),
+                        //   ),
+                        // );
                       },
                     );
                   },
@@ -137,6 +146,11 @@ class _ShopinCartPageState extends State<ShopinCartPage> {
                     setState(
                       () {
                         _selectedIndex = 2;
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CartScreen(),
+                          ),
+                        );
                       },
                     );
                   },
