@@ -52,7 +52,7 @@ class _CartScreenState extends State<CartScreen> {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('¿Eliminar pedido?'),
+                              title: const Text('¿Eliminar producto del carrito?'),
                               content: const Text(
                                   '¿Está seguro de que desea eliminar este pedido?'),
                               actions: [
