@@ -21,97 +21,108 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Categorias'),
         backgroundColor: kPrimaryColor,
       ),
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Consumer<CategoriesProvider>(
-              builder: (context, categoriesProvider, child) =>
-                  categoriesProvider.isLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (final category
-                                  in categoriesProvider.categories!)
-                                Column(
+      body: ListView(
+        children: [
+          Expanded(
+            child: SafeArea(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Consumer<CategoriesProvider>(
+                    builder: (context, categoriesProvider, child) =>
+                        categoriesProvider.isLoading
+                            ? const Center(child: CircularProgressIndicator())
+                            : SingleChildScrollView(
+                                child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 20),
-                                      child: Text(
-                                        category.nombre,
-                                        style: const TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 8, left: 8, right: 8),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const CategoryPage()));
-                                        },
-                                        child: Card(
-                                          semanticContainer: true,
-                                          margin: const EdgeInsets.all(10),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
+                                    for (final category
+                                        in categoriesProvider.categories!)
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 20),
+                                            child: Text(
+                                              category.nombre,
+                                              style: const TextStyle(
+                                                fontSize: 24,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
                                           ),
-                                          elevation: 4,
-                                          clipBehavior: Clip.antiAlias,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
-                                            children: [
-                                              ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(4),
-                                                child: Image.network(
-                                                  category.foto,
-                                                  fit: BoxFit.fitWidth,
-                                                  height: 200,
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8, left: 8, right: 8),
+                                            child: GestureDetector(
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const CategoryPage()));
+                                              },
+                                              child: Card(
+                                                semanticContainer: true,
+                                                margin:
+                                                    const EdgeInsets.all(10),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                ),
+                                                elevation: 4,
+                                                clipBehavior: Clip.antiAlias,
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment
+                                                          .stretch,
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                      child: Image.network(
+                                                        category.foto,
+                                                        fit: BoxFit.fitWidth,
+                                                        height: 200,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      color: Colors.black
+                                                          .withOpacity(0.8),
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                        vertical: 8,
+                                                        horizontal: 16,
+                                                      ),
+                                                      child: Text(
+                                                        category.descripcion,
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                              Container(
-                                                color: Colors.black
-                                                    .withOpacity(0.8),
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                  vertical: 8,
-                                                  horizontal: 16,
-                                                ),
-                                                child: Text(
-                                                  category.descripcion,
-                                                  style: const TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
-                                    ),
                                   ],
                                 ),
-                            ],
-                          ),
-                        ),
+                              ),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         color: kPrimaryColor,

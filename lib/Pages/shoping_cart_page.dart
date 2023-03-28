@@ -4,6 +4,7 @@ import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/components/constants.dart';
 import 'package:test1/providers/pedidos_provide.dart';
+import 'package:test1/screens/PaymentMethod/body.dart';
 import 'package:test1/widgets/icons.dart';
 
 class CartScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Shopping Cart'),
+        title: const Text('Carrito de compra'),
         backgroundColor: kPrimaryColor,
       ),
       body: Consumer<PedidoProvider>(
@@ -52,7 +53,8 @@ class _CartScreenState extends State<CartScreen> {
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('¿Eliminar producto del carrito?'),
+                              title:
+                                  const Text('¿Eliminar producto del carrito?'),
                               content: const Text(
                                   '¿Está seguro de que desea eliminar este pedido?'),
                               actions: [
@@ -86,8 +88,30 @@ class _CartScreenState extends State<CartScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text('Total:'),
-                  Text('\$${provider.getTotal().toStringAsFixed(2)}'),
+                  const Text(
+                    'Total:',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  Text(
+                    '\$${provider.getTotal()?.toStringAsFixed(2) ?? '0.00'}',
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  ElevatedButton(
+                    onPressed:
+                        provider.getTotal() != null && provider.getTotal() > 0
+                            ? () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PagoConfirmacionTabBar()));
+                              }
+                            : null,
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Colors.green)),
+                    child: const Text('PAGAR'),
+                  ),
                 ],
               ),
             ],

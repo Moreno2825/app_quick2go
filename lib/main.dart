@@ -6,6 +6,7 @@ import 'package:test1/providers/products_provider.dart';
 import 'package:test1/providers/products_service.dart';
 import 'package:test1/providers/shopping_cart_provider.dart';
 import 'package:test1/providers/user_providers.dart';
+import 'package:test1/providers/venta_provider.dart';
 import 'package:test1/screens/Welcome/welcome_screen.dart';
 
 void main() => runApp(const MyApp());
@@ -18,7 +19,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => ProductsProvider()..fetchProducts(),
+          create: (context) => ProductsProvider()
+            ..fetchProducts()
+            ..fetchProductCitrus()
+            ..fetchProductTropical(),
         ),
         ChangeNotifierProvider(
           create: (context) => CategoriesProvider()..fetchCategories(),
@@ -27,7 +31,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => CartProvider()),
         ChangeNotifierProvider(create: (context) => ProductService()),
         ChangeNotifierProvider(
-            create: (context) => PedidoProvider()..fetchPedidos())
+            create: (context) => PedidoProvider()..fetchPedidos()),
+        ChangeNotifierProvider(
+            create: (context) => VentasProvider()..fetchVentas())
       ],
       child: const MaterialApp(
         title: 'Material App',

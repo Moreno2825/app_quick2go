@@ -14,6 +14,7 @@ class ProductResponseDto {
     required this.id,
     required this.nombreProducto,
     required this.descripcion,
+    required this.categoriaId,
     required this.precio,
     required this.foto,
     required this.categoria,
@@ -22,6 +23,7 @@ class ProductResponseDto {
   final int id;
   final String nombreProducto;
   final String descripcion;
+  final int categoriaId;
   final double precio;
   final String foto;
   final Categoria categoria;
@@ -31,6 +33,7 @@ class ProductResponseDto {
         id: json["id"],
         nombreProducto: json["nombreProducto"],
         descripcion: json["descripcion"],
+        categoriaId: json["categoriaId"],
         precio: json["precio"],
         foto: json["foto"],
         categoria: Categoria.fromJson(json["categoria"]),

@@ -2,6 +2,9 @@ C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/flutter_windows.dll
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/AssetManifest.bin
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/AssetManifest.json
+C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/assets/icons/confirmar.svg
+C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/assets/icons/dollar.svg
+C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/assets/icons/pago.svg
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/assets/icons/quick2go.svg
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/assets/images/main_bottom.png
 C:/Users/rodri/Documents/AppQuick2Go/HomeScreen/build/windows/runner/Debug/data/flutter_assets/assets/images/quick2go.png

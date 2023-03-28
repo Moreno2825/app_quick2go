@@ -18,7 +18,8 @@ class CardListView extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    productsProvider.products?.first.categoria.nombre ?? '',
+                    productsProvider.productsCitrus?.first.categoria.nombre ??
+                        '',
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -46,7 +47,7 @@ class CardListView extends StatelessWidget {
             height: 230,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: productsProvider.products?.length ?? 0,
+              itemCount: productsProvider.productsCitrus?.length ?? 0,
               itemBuilder: (context, index) {
                 final product = productsProvider.products![index];
                 return modalProduct(product: product);
