@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/perfiluser_page.dart';
 import 'package:test1/Pages/shoping_cart_page.dart';
 import 'package:test1/Pages/categories_page.dart';
@@ -118,20 +117,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
-                IconBottomBar(
-                  text: "Help",
-                  icon: Icons.help_outlined,
-                  selected: _selectedIndex == 3,
-                  onPressed: () {
-                    setState(
-                      () {
-                        //_selectedIndex = 3;
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HelpPage()));
-                      },
-                    );
-                  },
-                )
               ],
             ),
           ),

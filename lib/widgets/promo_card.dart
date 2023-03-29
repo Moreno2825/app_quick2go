@@ -8,7 +8,7 @@ class PromoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> images = [
       'https://images.pexels.com/photos/1132047/pexels-photo-1132047.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-      'https://images.pexels.com/photos/5945641/pexels-photo-5945641.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+      'https://getpaidstock.com/tmp/[GetPaidStock.com]-6424161c9ede0.jpg'
     ];
     return SizedBox(
       width: double.infinity,

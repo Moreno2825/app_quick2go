@@ -153,7 +153,7 @@ class modalProduct extends StatelessWidget {
                           children: [
                             Icon(Icons.shopping_cart),
                             SizedBox(width: 8),
-                            Text('AGREGA')
+                            Text('AGREGAR')
                           ],
                         ),
                       ),

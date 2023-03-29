@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test1/Pages/category_page.dart';
 import 'package:test1/providers/products_provider.dart';
 import 'package:test1/widgets/alert_dialog.dart';
 
@@ -29,7 +30,11 @@ class CardListView extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () {
-                    // Acción a realizar al presionar el botón "Mostrar más"
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const CategoryPage(),
+                      ),
+                    );
                   },
                   child: const Text(
                     'Mostrar más',

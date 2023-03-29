@@ -26,6 +26,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "carousel_slider",
+      "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/carousel_slider-4.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///C:/Users/rodri/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0",
       "packageUri": "lib/",
@@ -254,7 +260,7 @@
       "languageVersion": "2.19"
     }
   ],
-  "generated": "2023-03-09T07:50:57.049751Z",
+  "generated": "2023-03-29T08:14:23.293032Z",
   "generator": "pub",
   "generatorVersion": "3.0.0-290.0.dev"
 }

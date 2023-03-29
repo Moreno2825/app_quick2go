@@ -1,7 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test1/Pages/category_page.dart';
-import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/Pages/shoping_cart_page.dart';
 import 'package:test1/components/constants.dart';
@@ -17,6 +17,7 @@ class CategoriesPage extends StatefulWidget {
 
 class _CategoriesPageState extends State<CategoriesPage> {
   int _selectedIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,105 +25,142 @@ class _CategoriesPageState extends State<CategoriesPage> {
         title: const Text('Categorias'),
         backgroundColor: kPrimaryColor,
       ),
-      body: ListView(
-        children: [
-          Expanded(
-            child: SafeArea(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Consumer<CategoriesProvider>(
-                    builder: (context, categoriesProvider, child) =>
-                        categoriesProvider.isLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    for (final category
-                                        in categoriesProvider.categories!)
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20),
-                                            child: Text(
-                                              category.nombre,
-                                              style: const TextStyle(
-                                                fontSize: 24,
-                                                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.02),
+                          spreadRadius: 2,
+                          offset: const Offset(0, 4),
+                        ),
+                      ]),
+                  child: CarouselSlider(
+                    items: [
+                      Image.network(
+                        'https://getpaidstock.com/tmp/[GetPaidStock.com]-64240b7a2f898.jpg',
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: 700,
+                      ),
+                      Image.network(
+                        'https://images.pexels.com/photos/5945867/pexels-photo-5945867.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: 700,
+                      ),
+                      Image.network(
+                        'https://images.pexels.com/photos/4443492/pexels-photo-4443492.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+                        fit: BoxFit.cover,
+                        height: 200,
+                        width: 700,
+                      ),
+                    ],
+                    options: CarouselOptions(
+                        autoPlay: true,
+                        aspectRatio: 2,
+                        enlargeCenterPage: true,
+                        enableInfiniteScroll: false,
+                        initialPage: 1),
+                  ),
+                ),
+                Expanded(
+                  child: SafeArea(
+                    child: Consumer<CategoriesProvider>(
+                      builder: (context, categoriesProvider, child) =>
+                          categoriesProvider.isLoading
+                              ? const Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              : ListView.builder(
+                                  itemCount:
+                                      categoriesProvider.categories!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final category =
+                                        categoriesProvider.categories![index];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const CategoryPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: Card(
+                                        semanticContainer: true,
+                                        margin: const EdgeInsets.only(
+                                            bottom: 10, top: 20),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        elevation: 2,
+                                        clipBehavior: Clip.antiAlias,
+                                        child: Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Material(
+                                              elevation: 10,
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
+                                                child: Image.network(
+                                                  category.foto,
+                                                  fit: BoxFit.cover,
+                                                  height: 180,
+                                                  width: 150,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 8, left: 8, right: 8),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const CategoryPage()));
-                                              },
-                                              child: Card(
-                                                semanticContainer: true,
-                                                margin:
-                                                    const EdgeInsets.all(10),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                ),
-                                                elevation: 4,
-                                                clipBehavior: Clip.antiAlias,
+                                            Expanded(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(20),
                                                 child: Column(
                                                   crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .stretch,
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              4),
-                                                      child: Image.network(
-                                                        category.foto,
-                                                        fit: BoxFit.fitWidth,
-                                                        height: 200,
-                                                      ),
+                                                    Text(
+                                                      category.nombre,
+                                                      style: const TextStyle(
+                                                          fontFamily: 'Roboto',
+                                                          fontSize: 24),
                                                     ),
-                                                    Container(
-                                                      color: Colors.black
-                                                          .withOpacity(0.8),
-                                                      padding: const EdgeInsets
-                                                          .symmetric(
-                                                        vertical: 8,
-                                                        horizontal: 16,
-                                                      ),
-                                                      child: Text(
-                                                        category.descripcion,
-                                                        style: const TextStyle(
-                                                          fontSize: 16,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
+                                                    const SizedBox(height: 16),
+                                                    Text(
+                                                      category.descripcion,
+                                                      style: const TextStyle(
+                                                          fontFamily:
+                                                              'Paytone One',
+                                                          fontSize: 16),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
-                                  ],
+                                    );
+                                  },
                                 ),
-                              ),
+                    ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: kPrimaryColor,
@@ -185,20 +223,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     );
                   },
                 ),
-                IconBottomBar(
-                  text: "Help",
-                  icon: Icons.help_outlined,
-                  selected: _selectedIndex == 3,
-                  onPressed: () {
-                    setState(
-                      () {
-                        //_selectedIndex = 3;
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HelpPage()));
-                      },
-                    );
-                  },
-                )
               ],
             ),
           ),

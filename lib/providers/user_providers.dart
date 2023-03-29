@@ -26,16 +26,30 @@ class UsersProvider extends ChangeNotifier {
       logger.d('User created: ${response.body}');
       _userEmail = email;
       if (context.mounted) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('User Loggin!')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Se inicio correctamente!')));
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const HomeScreen()));
       }
     } else {
-      logger.e('Error: ${response.statusCode}');
+      logger.e('Error: {El correo o contraseña es incorrecta}');
       if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${response.statusCode}!')),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Error"),
+              content: const Text("El correo o contraseña es incorrecta"),
+              actions: [
+                TextButton(
+                  child: const Text("Cerrar"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
         );
       }
     }

@@ -4,7 +4,6 @@ import 'package:test1/providers/categories_provider.dart';
 import 'package:test1/providers/pedidos_provide.dart';
 import 'package:test1/providers/products_provider.dart';
 import 'package:test1/providers/products_service.dart';
-import 'package:test1/providers/shopping_cart_provider.dart';
 import 'package:test1/providers/user_providers.dart';
 import 'package:test1/providers/venta_provider.dart';
 import 'package:test1/screens/Welcome/welcome_screen.dart';
@@ -28,7 +27,6 @@ class MyApp extends StatelessWidget {
           create: (context) => CategoriesProvider()..fetchCategories(),
         ),
         ChangeNotifierProvider(create: (context) => UsersProvider()),
-        ChangeNotifierProvider(create: (context) => CartProvider()),
         ChangeNotifierProvider(create: (context) => ProductService()),
         ChangeNotifierProvider(
             create: (context) => PedidoProvider()..fetchPedidos()),

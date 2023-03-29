@@ -7,6 +7,8 @@ import 'package:test1/providers/pedidos_provide.dart';
 import 'package:test1/screens/PaymentMethod/body.dart';
 import 'package:test1/widgets/icons.dart';
 
+import 'categories_page.dart';
+
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
 
@@ -146,18 +148,18 @@ class _CartScreenState extends State<CartScreen> {
                   },
                 ),
                 IconBottomBar(
-                  text: "Categories",
+                  text: "Categorias",
                   icon: Icons.sell,
                   selected: _selectedIndex == 1,
                   onPressed: () {
                     setState(
                       () {
-                        //_selectedIndex = 1;
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const CategoriesPage(),
-                        //   ),
-                        // );
+                        _selectedIndex = 1;
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CategoriesPage(),
+                          ),
+                        );
                       },
                     );
                   },
@@ -179,20 +181,6 @@ class _CartScreenState extends State<CartScreen> {
                     );
                   },
                 ),
-                IconBottomBar(
-                  text: "Help",
-                  icon: Icons.help_outlined,
-                  selected: _selectedIndex == 3,
-                  onPressed: () {
-                    setState(
-                      () {
-                        //_selectedIndex = 3;
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HelpPage()));
-                      },
-                    );
-                  },
-                )
               ],
             ),
           ),

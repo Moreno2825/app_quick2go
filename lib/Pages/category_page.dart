@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:test1/Pages/help_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/Pages/search_screen.dart';
 import 'package:test1/Pages/shoping_cart_page.dart';
 import 'package:test1/components/constants.dart';
+import 'package:test1/providers/pedidos_provide.dart';
 import 'package:test1/providers/products_provider.dart';
-import 'package:test1/providers/shopping_cart_provider.dart';
 import 'package:test1/widgets/icons.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -78,7 +76,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                   child: Image.network(
                                     product.foto,
                                     fit: BoxFit.cover,
-                                    height: 200,
+                                    height: 180,
                                   ),
                                 ),
                               ),
@@ -86,11 +84,22 @@ class _CategoryPageState extends State<CategoryPage> {
                                 child: Column(
                                   children: [
                                     Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        product.nombreProducto,
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontFamily: 'Roboto',
+                                            color: kValueColor),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                    Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
                                         product.descripcion,
                                         style: const TextStyle(
-                                            fontSize: 14,
+                                            fontSize: 18,
                                             fontFamily: 'Roboto',
                                             color: kValueColor),
                                         textAlign: TextAlign.center,
@@ -101,54 +110,113 @@ class _CategoryPageState extends State<CategoryPage> {
                                       child: Text(
                                         'Precio: \$${product.precio.toString()}',
                                         style: const TextStyle(
-                                            fontSize: 10,
+                                            fontSize: 14,
                                             fontFamily: 'Roboto',
                                             color: kValueColor),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(18.0),
                                       child: ElevatedButton(
                                         onPressed: () {
-                                          final cartProvider =
-                                              Provider.of<CartProvider>(context,
-                                                  listen: false);
-                                          if (cartProvider.cartItems.length <
-                                              10) {
-                                            cartProvider.addToCart(product);
-                                            Fluttertoast.showToast(
-                                              msg:
-                                                  '¡${product.nombreProducto} se agregó al carrito!',
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.grey[300],
-                                              textColor: Colors.black,
-                                              fontSize: 16.0,
-                                            );
-                                          } else {
-                                            Fluttertoast.showToast(
-                                              msg:
-                                                  'No se pueden agregar más de 10 productos',
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.grey[300],
-                                              textColor: Colors.black,
-                                              fontSize: 16.0,
-                                            );
-                                          }
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              int cantidad =
+                                                  1; // Cantidad de productos seleccionados
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          18.0),
+                                                ),
+                                                title: const Text(
+                                                    'Agregar al carrito'),
+                                                content: TextFormField(
+                                                  initialValue: '1',
+                                                  keyboardType:
+                                                      TextInputType.number,
+                                                  onChanged: (value) {
+                                                    cantidad =
+                                                        int.tryParse(value) ??
+                                                            1;
+                                                  },
+                                                  validator: (value) {
+                                                    if (value!.isEmpty) {
+                                                      return 'Ingrese una cantidad válida';
+                                                    }
+                                                    final parsedValue =
+                                                        int.tryParse(value);
+                                                    if (parsedValue == null ||
+                                                        parsedValue <= 0) {
+                                                      return 'Ingrese una cantidad válida';
+                                                    }
+                                                    return null;
+                                                  },
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    labelText: 'Cantidad',
+                                                    hintText:
+                                                        'Ingrese la cantidad de productos que desea agregar',
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(context),
+                                                    child: const Text(
+                                                      'Cancelar',
+                                                      style: TextStyle(
+                                                          color: kPrimaryColor),
+                                                    ),
+                                                  ),
+                                                  ElevatedButton(
+                                                    style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    kPrimaryColor)),
+                                                    onPressed: () {
+                                                      final pedidoProvider =
+                                                          Provider.of<
+                                                                  PedidoProvider>(
+                                                              context,
+                                                              listen: false);
+                                                      pedidoProvider.addPedido(
+                                                        product.id,
+                                                        cantidad,
+                                                      );
+                                                      Navigator.pop(context);
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(
+                                                        const SnackBar(
+                                                          content: Text(
+                                                              'Producto agregado al carrito'),
+                                                          duration: Duration(
+                                                              seconds: 2),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child:
+                                                        const Text('ACEPTAR'),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
                                         },
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: kValueColor),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  kPrimaryColor),
+                                        ),
                                         child: const Row(
-                                          mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            SizedBox(
-                                              width: 2,
-                                            ),
-                                            Text('Agregar'),
+                                            Icon(Icons.shopping_cart),
+                                            SizedBox(width: 8),
+                                            Text('AGREGAR')
                                           ],
                                         ),
                                       ),
@@ -218,28 +286,13 @@ class _CategoryPageState extends State<CategoryPage> {
                                 _selectedIndex = 2;
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CartScreen(),
+                                    builder: (context) => const CartScreen(),
                                   ),
                                 );
                               },
                             );
                           },
                         ),
-                        IconBottomBar(
-                          text: "Help",
-                          icon: Icons.help_outlined,
-                          selected: _selectedIndex == 3,
-                          onPressed: () {
-                            setState(
-                              () {
-                                //_selectedIndex = 3;
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const HelpPage()));
-                              },
-                            );
-                          },
-                        )
                       ],
                     ),
                   ),

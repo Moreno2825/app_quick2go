@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:test1/Pages/help_page.dart';
+import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/Pages/shoping_cart_page.dart';
 import 'package:test1/components/constants.dart';
+import 'package:test1/providers/pedidos_provide.dart';
 import 'package:test1/providers/products_service.dart';
-import 'package:test1/providers/shopping_cart_provider.dart';
 import 'package:test1/widgets/icons.dart';
 
 class ProductSearchScreen extends StatefulWidget {
@@ -121,35 +121,109 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: const EdgeInsets.all(18.0),
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            final cartProvider =
-                                                Provider.of<CartProvider>(
-                                                    context,
-                                                    listen: false);
-                                            cartProvider.addToCart(product);
-                                            Fluttertoast.showToast(
-                                              msg:
-                                                  '¡${product.nombreProducto} se agregó al carrito!',
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.BOTTOM,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.grey[300],
-                                              textColor: Colors.black,
-                                              fontSize: 16.0,
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                int cantidad =
+                                                    1; // Cantidad de productos seleccionados
+                                                return AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18.0),
+                                                  ),
+                                                  title: const Text(
+                                                      'Agregar al carrito'),
+                                                  content: TextFormField(
+                                                    initialValue: '1',
+                                                    keyboardType:
+                                                        TextInputType.number,
+                                                    onChanged: (value) {
+                                                      cantidad =
+                                                          int.tryParse(value) ??
+                                                              1;
+                                                    },
+                                                    validator: (value) {
+                                                      if (value!.isEmpty) {
+                                                        return 'Ingrese una cantidad válida';
+                                                      }
+                                                      final parsedValue =
+                                                          int.tryParse(value);
+                                                      if (parsedValue == null ||
+                                                          parsedValue <= 0) {
+                                                        return 'Ingrese una cantidad válida';
+                                                      }
+                                                      return null;
+                                                    },
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      labelText: 'Cantidad',
+                                                      hintText:
+                                                          'Ingrese la cantidad de productos que desea agregar',
+                                                    ),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              context),
+                                                      child: const Text(
+                                                        'Cancelar',
+                                                        style: TextStyle(
+                                                            color:
+                                                                kPrimaryColor),
+                                                      ),
+                                                    ),
+                                                    ElevatedButton(
+                                                      style: ButtonStyle(
+                                                          backgroundColor:
+                                                              MaterialStateProperty
+                                                                  .all<Color>(
+                                                                      kPrimaryColor)),
+                                                      onPressed: () {
+                                                        final pedidoProvider =
+                                                            Provider.of<
+                                                                    PedidoProvider>(
+                                                                context,
+                                                                listen: false);
+                                                        pedidoProvider
+                                                            .addPedido(
+                                                          product.id,
+                                                          cantidad,
+                                                        );
+                                                        Navigator.pop(context);
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          const SnackBar(
+                                                            content: Text(
+                                                                'Producto agregado al carrito'),
+                                                            duration: Duration(
+                                                                seconds: 2),
+                                                          ),
+                                                        );
+                                                      },
+                                                      child:
+                                                          const Text('ACEPTAR'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
                                             );
                                           },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor: kValueColor,
+                                          style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all<
+                                                    Color>(kPrimaryColor),
                                           ),
                                           child: const Row(
-                                            mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              SizedBox(
-                                                width: 2,
-                                              ),
-                                              Text('Agregar'),
+                                              Icon(Icons.shopping_cart),
+                                              SizedBox(width: 8),
+                                              Text('AGREGAR')
                                             ],
                                           ),
                                         ),
@@ -204,12 +278,12 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                   onPressed: () {
                     setState(
                       () {
-                        //_selectedIndex = 1;
-                        // Navigator.of(context).push(
-                        //   MaterialPageRoute(
-                        //     builder: (context) => const CategoriesPage(),
-                        //   ),
-                        // );
+                        _selectedIndex = 1;
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const CategoriesPage(),
+                          ),
+                        );
                       },
                     );
                   },
@@ -231,20 +305,6 @@ class _ProductSearchScreenState extends State<ProductSearchScreen> {
                     );
                   },
                 ),
-                IconBottomBar(
-                  text: "Help",
-                  icon: Icons.help_outlined,
-                  selected: _selectedIndex == 3,
-                  onPressed: () {
-                    setState(
-                      () {
-                        //_selectedIndex = 3;
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const HelpPage()));
-                      },
-                    );
-                  },
-                )
               ],
             ),
           ),

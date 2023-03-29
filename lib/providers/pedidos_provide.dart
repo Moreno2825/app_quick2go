@@ -83,6 +83,25 @@ class PedidoProvider extends ChangeNotifier {
     }
   }
 
+  // Future<void> eliminarTodosPedidos() async {
+  //   try {
+  //     final response = await http.delete(
+  //       Uri.parse('http://www.quick2goapiprod.somee.com/api/pedidos'),
+  //       headers: <String, String>{'content-type': 'application/json'},
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       // Si la eliminación fue exitosa en la API, elimina todos los pedidos de la lista local
+  //       _pedidos.clear();
+  //       notifyListeners();
+  //     } else {
+  //       throw Exception('No se pudieron eliminar todos los pedidos');
+  //     }
+  //   } catch (e) {
+  //     throw Exception('No se pudieron eliminar todos los pedidos: $e');
+  //   }
+  // }
+
   double getTotal() {
     double total = 0;
     for (final pedido in _pedidos) {
@@ -91,4 +110,3 @@ class PedidoProvider extends ChangeNotifier {
     return total;
   }
 }
-
