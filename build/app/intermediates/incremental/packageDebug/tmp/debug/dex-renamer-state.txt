@@ -1,4 +1,4 @@
-#Wed Mar 29 05:01:52 CST 2023
+#Fri Mar 31 07:28:57 CST 2023
 base.0=C\:\\Users\\rodri\\Documents\\AppQuick2Go\\HomeScreen\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

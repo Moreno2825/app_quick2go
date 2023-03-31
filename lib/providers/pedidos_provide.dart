@@ -12,24 +12,25 @@ class PedidoProvider extends ChangeNotifier {
 
   List<PedidoResponseDto> get pedidos => _pedidos;
 
-  Future<void> addPedido(int productoId, int cantidadProducto) async {
+  Future<int?> addPedido(int productoId, int cantidadProducto) async {
+    int? pedidoId;
     try {
       final pedido = {
         'productoId': productoId,
-        'cantidadProducto': cantidadProducto
+        'cantidadProducto': cantidadProducto,
       };
 
       final response = await http.post(
         Uri.parse('http://www.quick2goapiprod.somee.com/api/pedidos'),
         headers: <String, String>{
-          'Content-type': 'application/json; charset=UTF-8'
+          'Content-type': 'application/json; charset=UTF-8',
         },
         body: jsonEncode(pedido),
       );
-
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         final pedido = PedidoResponseDto.fromJson(jsonResponse);
+        final pedidoId = pedido.id;
         logger.d(pedido);
 
         _pedidos.add(pedido);
@@ -42,6 +43,7 @@ class PedidoProvider extends ChangeNotifier {
     } catch (e) {
       print('Error al agregar el pedido: $e');
     }
+    return pedidoId;
   }
 
   Future fetchPedidos() async {
@@ -83,24 +85,24 @@ class PedidoProvider extends ChangeNotifier {
     }
   }
 
-  // Future<void> eliminarTodosPedidos() async {
-  //   try {
-  //     final response = await http.delete(
-  //       Uri.parse('http://www.quick2goapiprod.somee.com/api/pedidos'),
-  //       headers: <String, String>{'content-type': 'application/json'},
-  //     );
+  Future<void> eliminarTodo() async {
+    try {
+      final response = await http.delete(
+        Uri.parse('http://www.quick2goapiprod.somee.com/api/pedidos'),
+        headers: <String, String>{'content-type': 'application/json'},
+      );
 
-  //     if (response.statusCode == 200) {
-  //       // Si la eliminación fue exitosa en la API, elimina todos los pedidos de la lista local
-  //       _pedidos.clear();
-  //       notifyListeners();
-  //     } else {
-  //       throw Exception('No se pudieron eliminar todos los pedidos');
-  //     }
-  //   } catch (e) {
-  //     throw Exception('No se pudieron eliminar todos los pedidos: $e');
-  //   }
-  // }
+      if (response.statusCode == 200) {
+        // Si la eliminación fue exitosa en la API, eliminar todos los pedidos localmente
+        _pedidos.clear();
+        notifyListeners();
+      } else {
+        throw Exception('No se pudieron eliminar todos los pedidos');
+      }
+    } catch (e) {
+      throw Exception('No se pudieron eliminar todos los pedidos: $e');
+    }
+  }
 
   double getTotal() {
     double total = 0;

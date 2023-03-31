@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:test1/Pages/homepage.dart';
+import 'package:test1/providers/pedidos_provide.dart';
 import 'package:test1/screens/PaymentMethod/body.dart';
 import '../../components/constants.dart';
 import '../../providers/venta_provider.dart';
@@ -129,7 +130,8 @@ class _VentaScreenState extends State<VentaScreen> {
                           selectionColor: kValueColor,
                         ),
                         onPressed: () {
-                          // Acción a realizar al presionar el botón de aceptar en la alerta
+                          Provider.of<PedidoProvider>(context, listen: false)
+                              .eliminarTodo();
                           Navigator.push(
                               context,
                               MaterialPageRoute(

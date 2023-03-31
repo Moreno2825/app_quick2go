@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test1/providers/pedidos_provide.dart';
 import '../../components/constants.dart';
 import '../../providers/venta_provider.dart';
 import 'home_screen.dart';
+import '../../dtos/responses/pedido_response_dto.dart';
 
 class CashConfirmation extends StatelessWidget {
   const CashConfirmation({
@@ -12,7 +14,8 @@ class CashConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
-    final idController = TextEditingController();
+    final pedidoId = context.watch<PedidoProvider>().pedidos.last.id;
+    final idController = TextEditingController(text: pedidoId.toString());
     final direcController = TextEditingController();
 
     return Column(
@@ -27,7 +30,7 @@ class CashConfirmation extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.only(left: 5, bottom: 5, top: 10),
                   child: Text(
-                    'Confirma el código de tu compra',
+                    'Numero de ticket de compra',
                     style: TextStyle(
                         fontSize: 15,
                         color: kValueColor,
@@ -35,6 +38,7 @@ class CashConfirmation extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  enabled: false,
                   cursorColor: kPrimaryColor,
                   decoration: InputDecoration(
                     filled: true,

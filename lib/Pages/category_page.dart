@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:test1/Pages/categories_page.dart';
 import 'package:test1/Pages/homepage.dart';
 import 'package:test1/Pages/search_screen.dart';
 import 'package:test1/Pages/shoping_cart_page.dart';
@@ -40,7 +41,12 @@ class _CategoryPageState extends State<CategoryPage> {
                 ],
                 leading: IconButton(
                   icon: const Icon(Icons.arrow_back),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()));
+                  },
                   color: const Color.fromARGB(255, 255, 255, 255),
                 ),
               ),
@@ -266,12 +272,13 @@ class _CategoryPageState extends State<CategoryPage> {
                           onPressed: () {
                             setState(
                               () {
-                                //_selectedIndex = 1;
-                                // Navigator.of(context).push(
-                                //   MaterialPageRoute(
-                                //     builder: (context) => const CategoriesPage(),
-                                //   ),
-                                // );
+                                _selectedIndex = 1;
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CategoriesPage(),
+                                  ),
+                                );
                               },
                             );
                           },
