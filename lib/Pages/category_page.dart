@@ -138,7 +138,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                                           18.0),
                                                 ),
                                                 title: const Text(
-                                                    'Agregar al carrito'),
+                                                    'Agregar al carrito!'),
                                                 content: TextFormField(
                                                   initialValue: '1',
                                                   keyboardType:
@@ -150,13 +150,13 @@ class _CategoryPageState extends State<CategoryPage> {
                                                   },
                                                   validator: (value) {
                                                     if (value!.isEmpty) {
-                                                      return 'Ingrese una cantidad válida';
+                                                      return 'Ingrese una cantidad válida:';
                                                     }
                                                     final parsedValue =
                                                         int.tryParse(value);
                                                     if (parsedValue == null ||
                                                         parsedValue <= 0) {
-                                                      return 'Ingrese una cantidad válida';
+                                                      return 'Ingrese una cantidad válida:';
                                                     }
                                                     return null;
                                                   },
@@ -164,7 +164,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                                       const InputDecoration(
                                                     labelText: 'Cantidad',
                                                     hintText:
-                                                        'Ingrese la cantidad de productos que desea agregar',
+                                                        'Por favor ingrese la cantidad de productos que desea agregar',
                                                   ),
                                                 ),
                                                 actions: [
@@ -199,7 +199,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                                           .showSnackBar(
                                                         const SnackBar(
                                                           content: Text(
-                                                              'Producto agregado al carrito'),
+                                                              'El producto se ha agregado al carrito'),
                                                           duration: Duration(
                                                               seconds: 2),
                                                         ),
