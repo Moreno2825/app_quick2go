@@ -22,7 +22,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categorias'),
+        title: const Text('Categorias recientes'),
         backgroundColor: kPrimaryColor,
       ),
       body: SingleChildScrollView(
